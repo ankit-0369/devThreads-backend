@@ -1,9 +1,7 @@
 
 import 'dotenv/config'
-import express, { Application } from "express";
-
-        
-const app: Application= express()
+import connectionDB from './db';
+import app from './app';
 
 
 app.get('/', (req, res)=>{
@@ -12,6 +10,23 @@ app.get('/', (req, res)=>{
 
 const PORT= process.env.PORT || 3000;
 
-app.listen(process.env.PORT || 3000, ()=>{
-    console.log("server started at", PORT);
+connectionDB()
+.then(()=>{
+    app.listen(PORT, () => {
+        console.log("Server is listening at port: ", PORT)
+    })
+    app.on('error', (error) => {
+        console.log("Error while listening in the app :: ", error);
+    })
+}).catch((err)=>{
+    console.log("error while DB connection :: ", err);
+    
 })
+
+
+
+
+
+// app.listen(process.env.PORT || 3000, ()=>{
+//     console.log("server started at", PORT);
+// })

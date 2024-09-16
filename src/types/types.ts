@@ -6,12 +6,22 @@ export interface IUser {
     password: string;
     userName: string;
     bio?: string; // Optional field
-    avtar?: string;
-    role: 'reader' | 'admin' | 'editor';
+    avatar?: string; // Optional field for avatar image URL
+    role: string; // Reference to Role document
+    refreshToken: string;
+  }
+
+
+  export interface IFollower {
+    user: mongoose.Types.ObjectId; // Reference to the User who is being followed
     followers: mongoose.Types.ObjectId[]; // Array of ObjectIds referencing other User documents
-    following:mongoose.Types.ObjectId[]; // Array of ObjectIds referencing other User documents
+    following: mongoose.Types.ObjectId[]; // Array of ObjectIds referencing other User documents
+  }
+
+  export interface IInterest {
+    user: mongoose.Types.ObjectId; // Reference to the User who has these interests
     interests: string[]; // Array of strings representing interests
-};
+  }
 
 export interface IPost{
 
